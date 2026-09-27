@@ -1,0 +1,45 @@
+name: Field test or batch interest
+description: Tell us whether this solved a real QTI problem. No exam files, please.
+title: "Field test: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "Please do not attach exams, answer keys, copyrighted packages, or private reports. This is a public issue. The proposed US$5 batch edition is not built or for sale; interest is nonbinding."
+  - type: dropdown
+    id: role
+    attributes:
+      label: Your role
+      options:
+        - Teacher or instructor
+        - Instructional designer
+        - LMS administrator
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What happened with a package you are allowed to use?
+      description: "Did a finding help choose a next step? Share finding codes or a redacted description. Say if you only tried the synthetic sample."
+    validations:
+      required: true
+  - type: input
+    id: volume
+    attributes:
+      label: How many chapter ZIPs do you check in one session?
+  - type: dropdown
+    id: interest
+    attributes:
+      label: Would you pay US$5 once to check multiple ZIPs and combine their findings?
+      options:
+        - No — the free single-file tool is enough
+        - Yes — for a real batch-checking workflow
+        - Maybe — something important is missing
+        - I cannot assess this yet
+    validations:
+      required: true
+  - type: textarea
+    id: missing
+    attributes:
+      label: What would need to change?

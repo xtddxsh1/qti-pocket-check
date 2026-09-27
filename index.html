@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="description" content="Inspect a QTI ZIP locally before trying another import. Read-only checks, a question inventory, and a diagnostic report without question text.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23152d35'/%3E%3Cpath d='m17 32 10 10 21-23' fill='none' stroke='%239beaac' stroke-width='7'/%3E%3C/svg%3E">
+  <title>QTI Pocket Check — local ZIP preflight</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/jszip.min.js" defer></script>
+  <script src="fixtures/definitions.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="webmcp.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow"><span class="dot" aria-hidden="true"></span> LOCAL · READ ONLY · NO ACCOUNT</div>
+      <h1>QTI Pocket Check</h1>
+      <p class="lead">Before another failed import, <br>see what is actually in your ZIP.</p>
+      <p class="intro">Find question files, missing package references, and a known QTI 1.2 compatibility clue. Your archive stays in this browser.</p>
+    </header>
+
+    <section class="upload-panel" aria-labelledby="upload-heading">
+      <h2 id="upload-heading">Check one QTI ZIP</h2>
+      <label class="file-label" for="zip-file">Choose your archive</label>
+      <input id="zip-file" type="file" accept=".zip,application/zip" aria-describedby="limits-note">
+      <p id="limits-note" class="quiet">Up to 25 MiB compressed, 100 MiB declared uncompressed, and 1,000 entries. XML files: up to 8 MiB each.</p>
+      <div class="samples"><span>Try a synthetic example:</span><button type="button" id="sample-good">Clean package</button><button type="button" id="sample-bad">Package with issues</button></div>
+      <p id="status" role="status" aria-live="polite">Ready. No upload, sign-in, or installation needed.</p>
+    </section>
+
+    <section id="results" hidden aria-labelledby="results-heading">
+      <div class="results-header"><div><div class="eyebrow">PREFLIGHT REPORT</div><h2 id="results-heading">Your results</h2></div><button type="button" id="download-report">Download JSON report</button></div>
+      <p id="archive-name" class="archive-name"></p>
+      <div class="metrics" aria-label="Package inventory">
+        <div><strong id="item-count">0</strong><span>item definitions</span></div>
+        <div><strong id="xml-count">0</strong><span>XML files checked</span></div>
+        <div><strong id="issue-count">0</strong><span>errors / warnings</span></div>
+      </div>
+      <p id="format-summary" class="quiet"></p>
+      <p id="result-summary" class="summary"></p>
+      <h3>Findings</h3>
+      <div id="diagnostics"></div>
+      <details id="inventory-details"><summary>Question file inventory</summary><div id="inventory"></div></details>
+      <p class="quiet">The report includes archive/file names, item IDs, counts, and diagnostics. It excludes question text, but filenames and IDs can still be sensitive. Review it before sharing.</p>
+    </section>
+
+    <section class="scope" aria-labelledby="scope-heading">
+      <h2 id="scope-heading">A useful first look, with clear limits.</h2>
+      <div class="scope-grid"><div><h3>What it checks</h3><ul><li>Root or nested <code>imsmanifest.xml</code>.</li><li>Local manifest references to files in the ZIP.</li><li>QTI 1.x / 1.2-style and QTI 2.x XML, with item counts.</li><li>QTI 1.x <code>response_lid</code> elements missing <code>rcardinality</code>.</li></ul></div><div><h3>What it cannot tell you</h3><ul><li>Whether Canvas or another LMS will accept the package.</li><li>Whether every question or answer is correct.</li><li>Whether the package passes a full QTI schema or accessibility audit.</li><li>Whether remote files or references affected by <code>xml:base</code> exist.</li></ul></div></div>
+      <p>No files are changed. Nothing is submitted to an LMS. XML with DTD/entity declarations, encrypted ZIPs, and ZIP64 archives are rejected.</p>
+    </section>
+    <section class="scope" aria-labelledby="feedback-heading">
+      <div class="eyebrow">EARLY FIELD TEST · FREE SINGLE-ZIP CHECK</div>
+      <h2 id="feedback-heading">Does this save you a failed import?</h2>
+      <p>Teachers and instructional designers: try a package you are allowed to use, then tell us which finding helped—or what it missed. Please share only a redacted description, never exam files or answer keys.</p>
+      <p><strong>Would a batch version be worth US$5, paid once?</strong> The proposed version would check several chapter ZIPs and combine their findings into one report. It is not built or for sale yet. Your answer is nonbinding; no payment details are collected.</p>
+      <p><a href="https://github.com/xtddxsh1/qti-pocket-check/issues/new?template=field-test.yml">Share a field test or $5 batch interest →</a></p>
+      <p class="quiet">No GitHub account? <a href="mailto:xt20208022@gmail.com?subject=QTI%20Pocket%20Check%20field%20test">Email feedback</a>: your role, the finding code, whether it helped, and whether you would pay $5 for batch checking.</p>
+    </section>
+    <footer><span>QTI Pocket Check · v0.1.0 · MIT · AI-assisted development</span><span><a href="https://github.com/xtddxsh1/qti-pocket-check">Source &amp; offline download</a> · No affiliation with Instructure.</span></footer>
+  </main>
+</body>
+</html>
